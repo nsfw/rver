@@ -1,13 +1,12 @@
-final int FPS = 30;
+final int FPS = 60;
 Config config;
-Grid grid;      // Grid: drawing ACN in a grid
 ArrayList<ACN> acn_listeners;
 
 PFont header_font;
 boolean fakeRXmode = false;
 long lastFakeRX = 0;
 
-final int HEADER_X = Grid.G_OFFSET_X;
+final int HEADER_X = 0; // Grid.G_OFFSET_X;
 final int HEADER_Y = 5;
 final int TITLE_Y = 40;
 int aliveAlpha;
@@ -25,7 +24,7 @@ int ledSize = 0;
 Panel[] Panels = new Panel[TOTAL_PANELS];
 
 final int PANEL1_Y = 0;
-final int PANEL2_Y = 10;
+final int PANEL2_Y = 13;
 int[][] panelInfo = {
     // universe, upperleft x, y in pixels
     {1, 0*PIXELS_PER_ROW, PANEL1_Y}, {2, 1*PIXELS_PER_ROW, PANEL1_Y},
@@ -34,17 +33,29 @@ int[][] panelInfo = {
     {7, 2*PIXELS_PER_ROW, PANEL2_Y}, {8, 3*PIXELS_PER_ROW, PANEL2_Y}
 };
 
-final int MARGIN_X = 20;
-final int MARGIN_Y = 20;
+int lx = 0;
+int ly = 0;
+
+PImage backgroundImg;
 
 public void setup(){
 
     config = new Config(this);
-    size(config.width(),config.height());
-    ledSize = (int) (config.width()-2*MARGIN_X) / (PIXELS_PER_ROW * PANELS_PER_SECTION);
+
+    // load background image and scale to configured width
+    backgroundImg = loadImage("data/RV_Outline_Light_Side_2015.png");
+    backgroundImg.resize(config.width(),0);
+    size(config.width(),backgroundImg.height);
+
+    // compute panel position and ledSize relative to background image size
+    lx = (int) (0.03 * backgroundImg.width);
+    ly = (int) (0.08 * backgroundImg.height);
+    int lwidth = (int) ((0.83 - 0.03) * backgroundImg.width);
+
+    ledSize = (int) (lwidth / (PIXELS_PER_ROW * PANELS_PER_SECTION));
 
     frameRate(FPS);
-    grid = new Grid(this,config);
+    // grid = new Grid(this,config);
 
     Panel.setApp(this);
 
@@ -103,13 +114,13 @@ public void update(){
 }
 
 public void draw(){
-    background(0);
+    background(backgroundImg);
     update();
 
-    pushMatrix();
-    translate(MARGIN_X,MARGIN_Y);
     // drawTopHeader();
 
+    pushMatrix();
+    translate(lx, ly);
     for(int i = 0; i < Panels.length; i++){
         Panels[i].draw();
     }
@@ -123,15 +134,15 @@ public void keyPressed(){
 
     switch(key){
         case '_':
-        case '-': grid.cellRgbPhase--; break;
+            // case '-': grid.cellRgbPhase--; break;
         case '=':
-        case '+': grid.cellRgbPhase++; break;
+            // case '+': grid.cellRgbPhase++; break;
 
         case 'F': fakeRXmode = !fakeRXmode; break;
         case 'O': config.load(); break;
         case 'S': config.save(); break;
         case 'l':
-        case 'L': grid.drawAllCellNumbers = !grid.drawAllCellNumbers; break;
-        case 'V': grid.toggleViewMode(); break;
+            // case 'L': grid.drawAllCellNumbers = !grid.drawAllCellNumbers; break;
+            // case 'V': grid.toggleViewMode(); break;
     };
 }
