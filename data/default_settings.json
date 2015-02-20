@@ -1,0 +1,17 @@
+{
+
+    "width":1000,
+    "height":220,
+
+    "acn-universe":1,
+    "acn-num-slots":512,
+    "acn-include-startcode":false,
+
+    "grid-num-cols":32,
+    "grid-num-rows":16,
+
+    "cell-mode":"bar",
+    "view-mode":"pixel",
+
+    "draw-all-colors":true,
+}

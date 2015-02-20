@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Processing needs the absolute path to our sketch
+pushd $(dirname "${0}") > /dev/null
+basedir=$(pwd -L)
+popd > /dev/null
+
+# Clean up anthing old
+killall -9 -vm 'java'
+
+processing-java --run --force --sketch=$basedir --output=/tmp/rver
