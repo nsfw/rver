@@ -69,7 +69,7 @@ class ACN_UNI implements Runnable {
                 ACNFrame frame = new ACNFrame(rx_packet);
                 int uni = frame.universe;
                 if (uni >= startUniverse && uni <= endUniverse){
-                    data.add(uni-startUniverse, frame);
+                    data.set(uni-startUniverse, frame);
                 } else {
                     System.err.println("ACN_UNI - universe out of range " + uni);
                 }
@@ -100,7 +100,7 @@ class ACN_UNI implements Runnable {
             fake.priority = 99;//lower than default priority
             fake.seq = fakePhase;
 
-            data.add(uni-startUniverse, fake);
+            data.set(uni-startUniverse, fake);
 
             fakePhase++;
         }
