@@ -18,7 +18,7 @@ class Panel {
     }
 
     Panel(int _univ, int _topx, int _topy, int _ledSize){
-        System.out.println("Panel Universe: "+_univ);
+        // System.out.println("Panel Universe: "+_univ);
         universe = _univ;
         topx = _topx;
         topy = _topy;
@@ -31,7 +31,8 @@ class Panel {
         app.translate(topx*ledSize, topy*ledSize);
 
         int pixel = 0;
-        for(int i=0; i<len; pixel++, i+=3){
+        // skip the startbyte
+        for(int i=1; i<(len-2); pixel++, i+=3){
             // walk our SCN data, striding by RGB
             drawLED(pixel, data[i], data[i+1], data[i+2]);
         }

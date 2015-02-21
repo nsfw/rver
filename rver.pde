@@ -49,7 +49,6 @@ public void setup(){
     ledSize = (int) (lwidth / (PIXELS_PER_ROW * PANELS_PER_SECTION));
 
     frameRate(FPS);
-    // grid = new Grid(this,config);
 
     Panel.setApp(this);
 
@@ -61,9 +60,6 @@ public void setup(){
         int universe = info[0];
         Panels[i] = new Panel(universe, info[1], info[2], ledSize);
     }
-
-    ellipseMode(CENTER);
-    rectMode(CENTER);
 
     header_font = loadFont("Helvetica-24.vlw");
 }
