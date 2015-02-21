@@ -12,32 +12,26 @@ class Panel {
     int topx;
     int topy;
     int ledSize;    // how big is an 'LED' in pixels
-    ACN acn;
 
     static void setApp(PApplet _app){
         app = _app;
     }
 
-    Panel(int _univ, int _topx, int _topy, int _ledSize, ACN _acn){
+    Panel(int _univ, int _topx, int _topy, int _ledSize){
         System.out.println("Universe: "+_univ);
         universe = _univ;
         topx = _topx;
         topy = _topy;
         ledSize = _ledSize;
-        acn = _acn;
     }
 
-    void draw(){
-        int[] data = acn.last.data;
-        int pixel = 0;
-        // System.out.println("last" + acn.last );
-        // System.out.println("len" + acn.last.dataLen );
+    void draw(int[] data, int len){
 
         app.pushMatrix();
         app.translate(topx*ledSize, topy*ledSize);
-        // System.out.println("x:" + topx*20*ledSize);
 
-        for(int i=0; i<acn.last.dataLen; pixel++, i+=3){
+        int pixel = 0;
+        for(int i=0; i<len; pixel++, i+=3){
             // walk our SCN data, striding by RGB
             drawLED(pixel, data[i], data[i+1], data[i+2]);
         }

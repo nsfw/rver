@@ -1,6 +1,6 @@
 final int FPS = 60;
 Config config;
-ArrayList<ACN> acnSockets;
+ArrayList<ACN_MC> acnSockets;
 
 PFont header_font;
 boolean fakeRXmode = false;
@@ -52,15 +52,15 @@ public void setup(){
 
     Panel.setApp(this);
 
-    acnSockets=new ArrayList<ACN>();
+    acnSockets=new ArrayList<ACN_MC>();
 
     // Configure each panel
     for(int i = 0; i < Panels.length; i++){
         int[] info = panelInfo[i];
         int universe = info[0];
-        ACN acn = new ACN(universe,config);
+        ACN_MC acn = new ACN_MC(universe,config);
         acnSockets.add(acn);
-        Panels[i] = new Panel(universe, info[1], info[2], ledSize, acn);
+        Panels[i] = new Panel(universe, info[1], info[2], ledSize);
     }
 
     ellipseMode(CENTER);
@@ -72,7 +72,7 @@ public void setup(){
 public void update(){
     // Faking it?
     if(fakeRXmode && (millis() - lastFakeRX) > 50){
-        for(ACN acn : acnSockets){
+        for(ACN_MC acn : acnSockets){
             acn.fakeRx();
         }
         lastFakeRX=millis();
@@ -85,7 +85,7 @@ public void draw(){
     pushMatrix();
     translate(lx, ly);
     for(int i = 0; i < Panels.length; i++){
-        Panels[i].draw();
+        Panels[i].draw(acnSockets.get(i).last.data, acnSockets.get(i).last.dataLen);
     }
     popMatrix();
 }

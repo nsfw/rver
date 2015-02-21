@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 import java.util.Arrays;
 
-class ACN implements Runnable{
+class ACN_MC implements Runnable{
     Thread thread;
 
     ACNFrame last,last_ignored;
@@ -23,7 +23,7 @@ class ACN implements Runnable{
 
     double rxDelta;
 
-    ACN(int uni, Config _config){
+    ACN_MC(int uni, Config _config){
       config=_config;
       listenUniverse=uni;
       sourceName="NONE";
@@ -153,7 +153,7 @@ class ACN implements Runnable{
             sock.setSoTimeout(120);
 
             // bind to WIRED
-            sock.setNetworkInterface(ACN.getInterface());
+            sock.setNetworkInterface(ACN_MC.getInterface());
             sock.joinGroup(ip); //set up the receive
         } catch(UnknownHostException ex) {
             System.err.println(ex);
