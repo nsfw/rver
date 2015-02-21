@@ -18,7 +18,7 @@ class Panel {
     }
 
     Panel(int _univ, int _topx, int _topy, int _ledSize){
-        System.out.println("Universe: "+_univ);
+        System.out.println("Panel Universe: "+_univ);
         universe = _univ;
         topx = _topx;
         topy = _topy;

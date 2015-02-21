@@ -1,10 +1,11 @@
 final int FPS = 60;
 Config config;
-ArrayList<ACN_MC> acnSockets;
 
 PFont header_font;
 boolean fakeRXmode = false;
 long lastFakeRX = 0;
+
+ACN_UNI acn;
 
 // RVIP
 final int PANELS_PER_SECTION = 4;
@@ -52,14 +53,12 @@ public void setup(){
 
     Panel.setApp(this);
 
-    acnSockets=new ArrayList<ACN_MC>();
+    acn = new ACN_UNI(1,8,ACNFrame.ACN_PORT);    // accept sACN universes 1-8 on this port
 
     // Configure each panel
     for(int i = 0; i < Panels.length; i++){
         int[] info = panelInfo[i];
         int universe = info[0];
-        ACN_MC acn = new ACN_MC(universe,config);
-        acnSockets.add(acn);
         Panels[i] = new Panel(universe, info[1], info[2], ledSize);
     }
 
@@ -72,9 +71,7 @@ public void setup(){
 public void update(){
     // Faking it?
     if(fakeRXmode && (millis() - lastFakeRX) > 50){
-        for(ACN_MC acn : acnSockets){
-            acn.fakeRx();
-        }
+        acn.fakeRx();
         lastFakeRX=millis();
     }
 }
@@ -85,7 +82,7 @@ public void draw(){
     pushMatrix();
     translate(lx, ly);
     for(int i = 0; i < Panels.length; i++){
-        Panels[i].draw(acnSockets.get(i).last.data, acnSockets.get(i).last.dataLen);
+        Panels[i].draw(acn.data.get(i).data, acn.data.get(i).dataLen);
     }
     popMatrix();
 }
