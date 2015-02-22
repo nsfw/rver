@@ -81,6 +81,18 @@ public void draw(){
         Panels[i].draw(acn.data.get(i).data, acn.data.get(i).dataLen);
     }
     popMatrix();
+
+    drawHeader();
+}
+
+public void drawHeader(){
+    fill(0,200,200);
+    pushMatrix();
+    translate(10,backgroundImg.height-10);
+    textFont(header_font,24);
+    String rxCount = String.format("rx: %d", acn.rxCount);
+    text(rxCount, 0,0);
+    popMatrix();
 }
 
 public void keyPressed(){

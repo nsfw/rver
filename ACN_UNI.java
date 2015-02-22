@@ -65,6 +65,7 @@ class ACN_UNI implements Runnable {
             sock.receive(rx_packet);
 
             synchronized (data) {
+                rxCount++;
                 // parse it and store it in it's appropriate universe slot
                 ACNFrame frame = new ACNFrame(rx_packet);
                 int uni = frame.universe;
