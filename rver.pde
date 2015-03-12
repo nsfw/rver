@@ -21,10 +21,11 @@ final int PANEL1_Y = 0;
 final int PANEL2_Y = 13;
 int[][] panelInfo = {
     // universe, upperleft x, y in pixels
-    {1, 0*PIXELS_PER_ROW, PANEL1_Y}, {2, 1*PIXELS_PER_ROW, PANEL1_Y},
-    {3, 2*PIXELS_PER_ROW, PANEL1_Y}, {4, 3*PIXELS_PER_ROW, PANEL1_Y},
-    {5, 0*PIXELS_PER_ROW, PANEL2_Y}, {6, 1*PIXELS_PER_ROW, PANEL2_Y},
-    {7, 2*PIXELS_PER_ROW, PANEL2_Y}, {8, 3*PIXELS_PER_ROW, PANEL2_Y}
+    // panels start at FRONT of vehicle, i.e. left edge of display
+    {4, 0*PIXELS_PER_ROW, PANEL1_Y}, {3, 1*PIXELS_PER_ROW, PANEL1_Y},
+    {2, 2*PIXELS_PER_ROW, PANEL1_Y}, {1, 3*PIXELS_PER_ROW, PANEL1_Y},
+    {8, 0*PIXELS_PER_ROW, PANEL2_Y}, {7, 1*PIXELS_PER_ROW, PANEL2_Y},
+    {6, 2*PIXELS_PER_ROW, PANEL2_Y}, {5, 3*PIXELS_PER_ROW, PANEL2_Y}
 };
 
 int lx = 0;
@@ -78,7 +79,9 @@ public void draw(){
     pushMatrix();
     translate(lx, ly);
     for(int i = 0; i < Panels.length; i++){
-        Panels[i].draw(acn.data.get(i).data, acn.data.get(i).dataLen);
+        int universe = Panels[i].universe;
+        ACNFrame frame = acn.frameForUniverse(universe);
+        Panels[i].draw(frame.data, frame.dataLen);
     }
     popMatrix();
 

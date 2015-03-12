@@ -85,6 +85,11 @@ class ACN_UNI implements Runnable {
         return false;
     }
 
+    ACNFrame frameForUniverse(int uni){
+        int index = uni - startUniverse;
+        return data.get(index);
+    }
+
     int fakePhase = 0;
 
     void fakeRx(){
